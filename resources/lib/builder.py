@@ -5,6 +5,7 @@ from resources.lib.constants import MAIN_MENU
 from codequick import Listitem, Resolver, Route
 import inputstreamhelper
 from urllib.parse import urlencode
+import xbmc
 
 
 class Builder:
@@ -55,6 +56,7 @@ class Builder:
             yield item
 
     def build_item(self, items):
+        playlist.clear()
         for each in items:
             if each.get("type") == "DESCRIPTION_CARD":
                 _, fanart = get_images(each)
@@ -74,7 +76,9 @@ class Builder:
                     },
                     "params": {"id": deep_get(each, "data.contentId")},
                 }
-                yield Listitem.from_dict(**item_data)
+                item = Listitem.from_dict(**item_data)
+                playlist.add(item.listitem.getPath(), item.listitem, -1)
+                yield item
 
     def build_play(self, video, stream_headers):
         license_key = "|Content-Type=application/octet-stream|R{SSM}|"
@@ -95,3 +99,6 @@ class Builder:
                 },
             }
             return Listitem(content_type="video").from_dict(**item_data)
+
+
+playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)

@@ -8,7 +8,7 @@ USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Ge
 
 DEVICE_ID = get_deviceid()
 
-BASE_HEADERS = headers = {
+BASE_HEADERS = {
     "Accept": "application/json",
     "Accept-Language": "en-GB,en-US;q=0.9,en;q=0.8,hi;q=0.7",
     "Accounttype": "EXISTING_GUEST_ACCOUNT",
